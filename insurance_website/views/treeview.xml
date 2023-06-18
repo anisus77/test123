@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- <template id="main_menu" inherit_id="website.main_menu">
+		<xpath expr="//ul[hasclass('navbar-nav')]" position="inside">
+			<li class="nav-item">
+				<a class="nav-link" href="/insurance/tree_view">Insurance Tree View</a>
+			</li>
+		</xpath>
+	</template> -->
+	<data>
+		<!-- Create menu item for insurance form -->
+		<record id="insurance_tree_menu" model="website.menu">
+			<field name="name">Insurance Tree View</field>
+			<field name="url">/insurance/tree_view</field>
+			<field name="parent_id" ref="website.main_menu"/>
+			<field name="sequence" type="int">40</field>
+		</record>
+	</data>
+	<template id="insurance_tree_view" name="Insurance Tree View">
+		<t t-call="website.layout">
+			<div class="container">
+				<h1>Insurance Tree View</h1>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Insurance Number</th>
+							<th>Agent</th>
+							<th>Insurance Policy</th>
+							<th>Insured</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t t-as="insurance" t-foreach="request.env['insurance.information'].sudo().search([('agent_id', '=', current_user.partner_id.id)])">
+							<tr>
+								<td>
+									<a t-attf-href="/insurance/form?id=#{insurance.id}">
+										<t t-esc="insurance.insurance_number"/>
+									</a>
+								</td>
+								<td>
+									<t t-esc="insurance.agent_id.name"/>
+								</td>
+								<td>
+									<t t-esc="insurance.insurance_policy_id.policy_name"/>
+								</td>
+								<td>
+									<t t-esc="insurance.insured_id.name"/>
+								</td>
+							</tr>
+						</t>
+					</tbody>
+				</table>
+			</div>
+		</t>
+	</template>
+</odoo>

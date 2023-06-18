@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Create menu item for insurance form -->
+        <record id="insurance_form_menu" model="website.menu">
+            <field name="name">Insurance Form</field>
+            <field name="url">/insurance/form</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">30</field>
+        </record>
+    </data>
+    <template id="insurance_form" name="Insurance Form">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Insurance Form</h1>
+                <!-- <form action="/insurance/form" class="insurance-form" method="post">-->
+                <form action="/insurance/form" class="insurance-form" method="post">
+                    <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                    <!-- <h2>Policy Details</h2><div class="form-group"><label for="insurance_category_id">Policy Category:</label><input class="form-control" name="insurance_category_id" required="required" type="text"/></div>-->
+                    <div class="form-group">
+                        <label for="insurance_category_id">Policy Category:</label>
+                        <select class="form-control" name="insurance_category_id" required="required">
+                            <option value="">--Select Policy Category--</option>
+                            <t t-as="category" t-foreach="request.env['insurance.category'].sudo().search([])">
+                                <option t-att-value="category.id">
+                                    <t t-esc="category.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <!-- <div class="form-group"><label for="insurance_sub_category_id">Sub Category:</label><input class="form-control" name="insurance_sub_category_id" required="required" type="text"/></div>-->
+                    <div class="form-group">
+                        <label for="insurance_sub_category_id">Sub Category:</label>
+                        <select class="form-control" name="insurance_sub_category_id" required="required">
+                            <option value="">--Select Sub Category--</option>
+                            <t t-as="sub_category" t-foreach="request.env['insurance.sub.category'].sudo().search([])">
+                                <option t-att-value="sub_category.id">
+                                    <t t-esc="sub_category.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <!--                     <div class="form-group"><label for="insurance_policy_id">Insurance Policy:</label><input class="form-control" name="insurance_policy_id" required="required" type="text"/></div>-->
+                    <div class="form-group">
+                        <label for="insurance_policy_id">Insurance Policy:</label>
+                        <select class="form-control" name="insurance_policy_id" required="required">
+                            <option value="">--Select Insurance Policy--</option>
+                            <t t-as="policy" t-foreach="request.env['insurance.policy'].sudo().search([])">
+                                <option t-att-value="policy.id">
+                                    <t t-esc="policy.policy_name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                    <label for="issue_date">Issue Date:</label>
+                    <input class="form-control" name="issue_date" required="required" type="date"/>
+                </div>
+                    <div class="form-group">
+                        <label for="insurance_buying_for_id">Buying For:</label>
+                        <input class="form-control" name="insurance_buying_for_id" type="text"/>
+                    </div>
+                    <!-- <h2>Agent Details</h2><div class="form-group"><label for="agent_id">Agent:</label><input class="form-control" name="agent_id" readonly="readonly" required="required" t-att-value="current_user_partner_id" type="text"/></div>-->
+                    <div class="form-group">
+                        <label for="agent_id">Agent:</label>
+                        <input class="form-control" name="agent_id" readonly="readonly" required="required" t-att-value="current_user.name" type="text"/>
+                    </div>
+                    <!-- <h2>Insured Details</h2><div class="form-group"><label for="insured_id">Insured:</label><input class="form-control" name="insured_id" required="required" type="text"/></div>-->
+                    <div class="form-group">
+                        <label for="insured_id">Insured:</label>
+                        <select class="form-control" name="insured_id" required="required">
+                            <option value="">--Select Insured--</option>
+                            <t t-as="insured" t-foreach="request.env['res.partner'].sudo().search([('is_customer', '=', True)])">
+                                <option t-att-value="insured.id">
+                                    <t t-esc="insured.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth:</label>
+                        <input class="form-control" name="dob" required="required" type="date"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select class="form-control" name="gender" required="required">
+                            <option value="">--Select Gender--</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <!-- <h2>Nominee Details</h2>
+                    <div class="form-group">
+                        <label for="insurance_nominee_id">Nominee:</label>
+                        <input class="form-control" name="insurance_nominee_id" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="your_nominee_is_your">Your Nominee is Your:</label>
+                        <input class="form-control" name="your_nominee_is_your" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="nominee_dob">Nominee Date of Birth:</label>
+                        <input class="form-control" name="nominee_dob" type="date"/>
+                    </div> -->
+                    <input type="submit" value="Submit"/>
+                </form>
+            </div>
+        </t>
+    </template>
+    
+</odoo>

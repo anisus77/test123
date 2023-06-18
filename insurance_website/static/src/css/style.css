@@ -1,0 +1,35 @@
+/* Set the base font color to dark green */
+body {
+    color: #006400;
+}
+
+/* Style the form with a white background and light green border */
+form {
+    background-color: #ffffff;
+    border: 1px solid #90ee90;
+    padding: 20px;
+}
+
+/* Style the form labels with a light green color */
+form label {
+    color: #90ee90;
+}
+
+/* Style the form inputs with a light green border */
+form .form-control {
+    border: 1px solid #90ee90;
+}
+
+/* Style the form submit button with a dark green background and white text */
+form input[type="submit"] {
+    background-color: #006400;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Change the button color on hover */
+form input[type="submit"]:hover {
+    background-color: #90ee90;
+}
